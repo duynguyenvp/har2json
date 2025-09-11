@@ -11,6 +11,7 @@ This tool helps you **convert HAR (HTTP Archive) files** into a [Mockoon](https:
 ├── output/              # Output folder for generated files
 │   └── mockoon.json     # Generated Mockoon configuration
 ├── setup.bat            # Batch script to install dependencies
+├── start.bat            # Script to run mock server using Mockoon CLI
 ├── node_modules/        # Node.js dependencies
 └── README.md            # Documentation
 ```
@@ -48,9 +49,18 @@ To add more APIs:
 > 💡 **Smart Merging**: The tool automatically detects duplicate APIs and only adds new ones, preserving your existing configuration.
 
 ### 4. Use with Mockoon
+
+**Option 1: Use Mockoon app or CLI**
 - Open **Mockoon app** or use **Mockoon CLI**
 - Import `output/mockoon.json`
 - Start your mock server and test the APIs
+
+**Option 2: Run mock server directly with Mockoon CLI**
+- After generating `output/mockoon.json`, run:
+  ```bash
+  start.bat
+  ```
+- The mock server will start on port 9000 by default
 
 ## 📌 Notes
 - HAR files can be exported directly from **Chrome DevTools** or proxy tools like **Fiddler**, **Charles**, or **Postman**
@@ -58,3 +68,6 @@ To add more APIs:
 - Each HAR file is processed and then deleted to avoid reprocessing
 - To reset everything, delete `output/mockoon.json` and run the conversion again
 - The tool automatically handles different HTTP methods, status codes, and response types
+
+---
+For support or feedback, please open an issue in this repository.

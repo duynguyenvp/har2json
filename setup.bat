@@ -1,12 +1,31 @@
 @echo off
-:: If uuid is already installed in local node_modules
-if exist node_modules\.bin\http-server (
-    echo uuid is already installed locally.
-    exit /b
+setlocal ENABLEDELAYEDEXPANSION
+
+:: Paths to verify after install
+set "UUID_PKG=node_modules\uuid\package.json"
+set "MOCKOON_BIN=node_modules\.bin\mockoon-cli.cmd"
+
+:: If both already present, skip install
+if exist "%UUID_PKG%" if exist "%MOCKOON_BIN%" (
+  echo Dependencies are already installed.
+  goto :end
 )
 
-:: If not installed, install locally
-echo Installing uuid locally...
-call npm install uuid --no-save
-echo uuid has been installed locally.
+echo Installing local dependencies (single transaction)...
+call npm install @mockoon/cli uuid --no-save
+
+:: Verify installation
+if not exist "%UUID_PKG%" (
+  echo ERROR: uuid package missing after install.
+  exit /b 1
+)
+if not exist "%MOCKOON_BIN%" (
+  echo ERROR: mockoon-cli binary missing after install.
+  exit /b 1
+)
+
+echo Dependencies are ready.
+
+:end
+endlocal
 exit /b
